@@ -1,8 +1,5 @@
 
-Golang readme · MD
-Copy
-
-# 🐹 Learning Go
+#  Go
 
 A personal repository documenting my journey learning the Go programming language, covering all core topics through hands-on code and examples.
 
