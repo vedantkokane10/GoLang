@@ -1,0 +1,10 @@
+- We gotta run the command (where our main.go file exists / it can automatically find main file)
+    - Command -> GOOS="os_name" go build
+    - os_names => windows, linux, darwin (for macOS)
+    - for windows it creates a .exe file
+    - for linux it creates a pal file
+    - for max it creates a macfile
+
+- we can use go build for creating custom applications
+
+

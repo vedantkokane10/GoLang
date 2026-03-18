@@ -1,0 +1,38 @@
+- GoLang/GO was developed by Google
+
+- GO is a compiled lamgauge
+
+- Tools like Docker, Kubernetes etc are written in GoLang
+
+- Features
+    -> Statically typed langauge i.e Variables need datatypes when declared (its debatable coz we declare implicit variables but best practice is that we give datatypes during declaration)
+    -> Automatic Garbage Collection (Unlike C++ where we have to manually delete objects which no longer in reference)
+    -> Very lightweight (Goroutines) and Compiles very quickly
+    -> Built-in testing
+    -> Built-in Concurrency
+    -> Great for backend & cloud
+
+- Lexer
+    -> Like every language GO also has its Lexer
+    -> Lexer's job is to see whether we are following the rules, syntax, grammer of the particular langauge
+    -> Lexer checks code before it is compiled
+    -> Lexer does not bother about any logical errors or runtime errors and stuff, it only checks whether rules are followed or not
+    -> Lexer checks whether variables are correctly used and declared, it also checks whether semicolons are written or not  
+
+- Go is case insensitive 
+    -> If a funtion is exported as public then its name starts with a capital letter
+    -> Ex. fmt.Println() => here Println() function is exported as public inside the fmt package, so its name starts with a capital letter
+
+- Go does have try-catch blocks
+
+- If variables/functions starts with Uppercase character, it is accessible outside the scope of its package, if lowercase then it is only accessible inside its package.
+
+- In Go, type is also a keyword used to create our own type.
+    type User struct {
+        Name string
+        Age  int
+    }
+
+- In Golang everything is a empty interface
+
+

@@ -1,0 +1,90 @@
+- Memory Management in Go 
+    - In any program, memory is mainly divided into two parts:
+        1) Stack
+        2) Heap
+
+    - Go also uses these, but the compiler decides automatically where variables go.
+
+- Stack Memory (fast)
+    - Stack is used for local variables inside functions.
+    - Very fast
+    - Automatically cleaned when function finishes
+    - No manual memory management
+    - Ex 
+      func add() {
+           x := 10
+           y := 20
+           z := x + y
+       }
+
+    - When add() finishes: Stack cleared automatically
+
+- Heap Memory (Dynamic)
+    - Heap is used when data needs to live longer than the function scope.
+    - Ex
+    func createNumber() *int {
+        x := 10
+        return &x
+    }
+    - x cannot be destroyed after function ends
+    - because its address is returned
+    - So Go moves x to heap automatically.
+    - The pointer returned still points to valid memory.
+
+- Go decides: stack/heap using Escape Analysis.
+    - Go compiler checks:
+    - Does this variable escape the function?
+    - If NO → Stack
+    - If YES → Heap
+    - we can see escape analysis using: go build -gcflags="-m"
+
+- Garbage Collector (GC)
+    - In GO we never free memory manually.
+    - Go has a Garbage Collector like Java.
+    - It:
+        - Finds unused heap objects
+        - Deletes them automatically
+        - Frees memory
+    - Ex
+      func main() {
+        x := new(int)
+        *x = 10
+      }
+    - If x is not used anymore → GC removes it.
+
+- new() vs make()
+    - new() allocates memory but does not initialize complex structures like slice/map/channel.
+    - make() allocates memory AND initializes slice/map/channel internals.
+
+    - new()
+        - allocates memory but does not initialize
+        - sets zero value
+        - returns pointer (pointing to the memory address)
+        - p := new(int)
+          Heap
+          ----
+           0
+           ↑
+           p (*int)
+        fmt.Println(*p) -> 0
+        - So new does initialize with zero value, but does NOT initialize internal structures like slice/map/channel.
+
+    
+    - make()
+        - allocate memory and also Initializes
+        - sets non zero value
+        - Ex -> m := make(map[string]int)
+             - allocate map structure
+             - create internal hash table
+             - return usable map
+             - Memory: 
+                map header
+                |
+                v
+                hash table allocated
+                m["age"] = 25 -> works
+    
+- new()  → memory only
+- make() → memory + initialization
+
+- Only these three: slice, map, channel need make(). Everything else can use New.
