@@ -1,0 +1,65 @@
+Cyclical Imports - As we start writing more complex systems, we're bound to run into cyclical imports. This happens when package A
+imports package B but package B imports package A (either directly or indirectly through another package). This is
+something the compiler won’t allow.
+
+
+- Let’s change our shopping structure to cause the error.
+- Move the Item definition from shopping/db/db.go into shopping/pricecheck.go. Your pricecheck.go file
+should now look like:
+    package shopping
+    import (
+        "shopping/db"
+    )
+    type Item struct {
+        Price float64
+    }
+
+    func PriceCheck(itemId int) (float64, bool) {
+        item := db.LoadItem(itemId)
+        if item == nil {
+        return 0, false
+        }
+        return item.Price, true
+    }
+
+- If we try to run the code, we’ll get a couple of errors from db/db.go about Item being undefined. This makes
+sense. Item no longer exists in the db package; it’s been moved to the shopping package. We need to change
+shopping/db/db.go to:
+    package db
+    import (
+        "shopping"
+    )
+    func LoadItem(id int) *shopping.Item {
+        return &shopping.Item{
+        Price: 9.001,
+        }
+    }
+
+    Now when we try to run the code, you’ll get a dreaded import cycle not allowed error
+
+- We solve this by introducing
+another package which contains shared structures. Your directory structure should look like:
+    - shopping
+        pricecheck.go
+        - db
+            db.go
+        - models
+            item.go
+         - main
+            main.go
+
+- pricecheck.go will still import shopping/db, but db.go will now import shopping/models instead of shopping,
+thus breaking the cycle. Since we moved the shared Item structure to shopping/models/item.go, we need to
+change shopping/db/db.go to reference the Item structure from models package:
+    package db
+    import (
+        "shopping/models"
+    )
+    func LoadItem(id int) *models.Item {
+        return &models.Item{
+            Price: 9.001,
+        }
+    }
+
+- The important rule about these shared packages is that they shouldn’t import anything from the shopping package or
+any sub-packages

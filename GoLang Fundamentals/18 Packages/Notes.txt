@@ -1,0 +1,44 @@
+- In Go, package names follow the directory structure of your Go workspace. If we were building a shopping system, we’d probably start with a package name “shopping”
+
+shopping/                  <-- MODULE ROOT (go.mod is here)
+│
+├── go.mod                 <-- module shopping
+│
+├── priceCheck.go          <-- package shopping
+│
+├── db/                    <-- package db
+│   └── db.go
+│
+├── model/                 <-- package model
+│   └── item.go
+│
+└── main/                  <-- package main
+    └── main.go
+
+- shopping is a root package 
+- But there is no hierarchy, every package is a single value
+- when we name a package, via the package keyword, we provide a single value, not a complete hierarchy (e.g., “shopping” or “db”). When you import a package, you specify the complete path.
+
+
+- In Go:
+    - Folder name usually = package name
+    - Each folder is one package
+    - go.mod defines module name
+    - Imports are based on: module-name/folder-name
+    - So module is: module shopping
+    
+- Then ->
+    - db package import path = "shopping/db"
+    - model package import path = "shopping/model"
+    - root package import path = "shopping"
+
+- for main.go file I've created a folder main -> main.go and imported "shopping" 
+
+- Go package structure mental model
+    - go.mod defines the module name
+    - Each folder is usually a package
+    - Imports use: module-name/folder-name
+    - package main is the executable entry point
+    - Root folder can also contain a package
+    - Packages are not “classes”; they are folders of related Go files
+
